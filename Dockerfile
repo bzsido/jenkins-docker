@@ -29,6 +29,12 @@ RUN apt-get update && \
    apt-get clean && \
    usermod -aG docker jenkins
 
+# Copy a list of plugins to the container and install them with install-plugins.sh default script
+# If you want to install a specific version, include it after plugin name like so: ant:1.11
+# An overview of current plugins: https://stackoverflow.com/questions/9815273/how-to-get-a-list-of-installed-jenkins-plugins-with-name-and-version-pair
+COPY plugins.txt /usr/share/jenkins/ref/plugins.txt
+RUN /usr/local/bin/install-plugins.sh < /usr/share/jenkins/ref/plugins.txt
+
 # Copy initial configuration as Configuration as Code
 COPY casc.yaml /usr/share/jenkins/casc.yaml
 

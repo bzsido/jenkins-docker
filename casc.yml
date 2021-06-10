@@ -1,5 +1,6 @@
 # if you are unsure, configure jenkins by hand,
 # then use the configuration-as-code plugin to read running settings
+# more info: https://github.com/jenkinsci/configuration-as-code-plugin/blob/master/README.md
 
 # define your jenkins URL here
 #unclassified:

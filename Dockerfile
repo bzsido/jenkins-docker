@@ -8,6 +8,10 @@ ENV CASC_JENKINS_CONFIG /usr/share/jenkins/casc.yaml
 
 USER root
 
+# Make sure that the gid of the docker group matches the gid of the docker group on the host VM
+# Substitute gid 120 according to your own setup
+# RUN groupadd -g 120 docker
+
 # Install the latest Docker CE binaries and add user `jenkins` to the docker group
 RUN apt-get update && \
     apt-get -y --no-install-recommends install apt-transport-https \

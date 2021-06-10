@@ -1,0 +1,72 @@
+# if you are unsure, configure jenkins by hand,
+# then use the configuration-as-code plugin to read running settings
+
+# define your jenkins URL here
+#unclassified:
+#  location:
+#    url: http://192.168.1.10/
+jenkins:
+#  slaveAgentPort: 50000
+  securityRealm:
+    local:
+      allowsSignup: false
+      enableCaptcha: false
+    # configure your AD connection below, comment out local if you choose to
+    #activeDirectory:
+      #bindPassword: 
+      #customDomain: true
+      #domains:
+      #- bindName:
+        #bindPassword:
+        #name:
+        #servers:
+        #site:
+        #tlsConfiguration:
+      #groupLookupStrategy:
+      # define a fallback user in case AD connection's not working
+      #internalUsersDatabase:
+      #    jenkinsInternalUser: "admin"
+      #removeIrrelevantGroups: false
+      #startTls: true
+  authorizationStrategy:
+    #loggedInUsersCanDoAnything:
+    #  allowAnonymousRead: false
+    projectMatrix:
+      permissions:
+      - "Overall/Administer:admin"
+      - "Overall/Read:authenticated"
+# include your cloud configs here
+# this is just an initial config to test your connection
+# and build images from inside jenkins if you'd want to
+clouds:
+  - docker:
+      dockerApi:
+        connectTimeout: 60
+        dockerHost:
+          uri: "unix:///var/run/docker.sock"
+        readTimeout: 60
+      name: "docker local"
+  # detailed template for a docker-slave
+  # - docker:
+  #       dockerApi:
+  #         connectTimeout: 60
+  #         dockerHost:
+  #           uri: "unix:///var/run/docker.sock"
+  #         readTimeout: 60
+  #       name: "docker slave"
+  #       templates:
+  #       - connector:
+  #           attach:
+  #             user: "jenkins"
+  #         dockerTemplateBase:
+  #           cpuPeriod: 0
+  #           cpuQuota: 0
+  #           image: "address/of/conainer/image/inside/registry/ansible-slave"
+  #           pullCredentialsId: "your-credentials-id"
+  #         instanceCapStr: "10"
+  #         labelString: "ansible-docker-slave"
+  #         mode: EXCLUSIVE
+  #         name: "docker-slave"
+  #         pullStrategy: PULL_ALWAYS
+  #         pullTimeout: 300
+  #         remoteFs: "/home/jenkins"
